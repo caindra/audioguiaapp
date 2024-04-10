@@ -28,6 +28,9 @@ class User
     #[ORM\Column(nullable: true)]
     private ?bool $isEditor = false;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isLogged = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +88,17 @@ class User
     public function setIsEditor(?bool $isEditor): User
     {
         $this->isEditor = $isEditor;
+        return $this;
+    }
+
+    public function getIsLogged(): ?bool
+    {
+        return $this->isLogged;
+    }
+
+    public function setIsLogged(?bool $isLogged): User
+    {
+        $this->isLogged = $isLogged;
         return $this;
     }
 
