@@ -13,4 +13,10 @@ class AppController extends AbstractController
     {
         return $this->render('spanish/cover.html.twig');
     }
+
+    #[Route('/english', name: 'cover_english')]
+    public function coverEnglish() : Response
+    {
+        return $this->render('english/cover.html.twig');
+    }
 }
