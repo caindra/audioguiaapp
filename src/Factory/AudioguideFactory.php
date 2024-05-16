@@ -50,8 +50,8 @@ final class AudioguideFactory extends ModelFactory
             'audioEn' => self::faker()->url(),
             'audioEs' => self::faker()->url(),
             'image' => self::faker()->image(),
-            'nameEn' => self::faker()->words(3),
-            'nameEs' => self::faker()->words(3),
+            'nameEn' => self::faker()->word(),
+            'nameEs' => self::faker()->word(),
             'textEn' => self::faker()->text(),
             'textEs' => self::faker()->text(),
         ];
