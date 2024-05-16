@@ -31,8 +31,11 @@ security:
         ROLE_VISIT: [ 'ROLE_USER' ]
 
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+      - { path: ^/entrar, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Página de inicio de sesión en español
+      - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }  # Página de inicio de sesión en inglés
+      - { path: ^/salir, roles: ROLE_USER }                     # Página de cierre de sesión en español
+      - { path: ^/logout, roles: ROLE_USER }                    # Página de cierre de sesión en inglés
+      - { path: ^/, roles: ROLE_USER }                          # Ruta raíz, usuario debe tener ROLE_USER mínimo
 
 when@test:
     security:

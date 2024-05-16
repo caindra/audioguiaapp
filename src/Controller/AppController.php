@@ -11,12 +11,14 @@ class AppController extends AbstractController
     #[Route('/', name: 'cover')]
     public function cover() : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('spanish/cover.html.twig');
     }
 
     #[Route('/english', name: 'cover_english')]
     public function coverEnglish() : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('english/cover.html.twig');
     }
 }
