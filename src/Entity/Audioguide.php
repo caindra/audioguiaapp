@@ -32,8 +32,11 @@ class Audioguide
     #[ORM\Column(length: 255)]
     private ?string $audioEn = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    #[ORM\Column(type: 'blob')]
+    /**
+     * @var resource|null $image
+     */
+    private $image = null;
 
     public function getId(): ?int
     {
@@ -106,16 +109,23 @@ class Audioguide
         return $this;
     }
 
-    public function getImage(): ?string
+    /**
+     * @return resource|null
+     */
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage(?string $image): Audioguide
+    /**
+     * @param resource|null $image
+     */
+    public function setImage($image): void
     {
         $this->image = $image;
-        return $this;
     }
+
+
 
 
 }
