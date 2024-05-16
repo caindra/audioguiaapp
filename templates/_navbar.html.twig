@@ -15,6 +15,12 @@
                 </li>
             </ul>
         </div>
-        <a class="nav-link" href="#"><i class="fa-solid fa-circle-user"></i> Iniciar sesión</a>
+        {% if app.user %}
+            <h5>Conectado como {{ app.user.email }}</h5>
+            <a href="{{ path('app_logout_es') }}" class="btn btn-danger">Cerrar sesión</a>
+        {% else %}
+            <a href="{{ path('app_login_es') }}" class="btn btn-primary">Iniciar sesión</a>
+        {% endif %}
+
     </div>
 </nav>
