@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -39,6 +41,14 @@ class User implements UserInterface, UserPasswordHasherInterface, PasswordAuthen
 
     #[ORM\Column(nullable: true)]
     private ?bool $isLogged = false;
+
+    #[ORM\ManyToMany(targetEntity: Audioguide::class, inversedBy: 'users')]
+    private Collection $audioguides;
+
+    public function __construct()
+    {
+        $this->audioguides = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -145,5 +155,29 @@ class User implements UserInterface, UserPasswordHasherInterface, PasswordAuthen
         // TODO: Implement @method string hashPassword(PasswordAuthenticatedUserInterface $user, string $plainPassword)
         // TODO: Implement @method bool isPasswordValid(PasswordAuthenticatedUserInterface $user, string $plainPassword)
         // TODO: Implement @method bool needsRehash(PasswordAuthenticatedUserInterface $user)
+    }
+
+    /**
+     * @return Collection<int, Audioguide>
+     */
+    public function getAudioguides(): Collection
+    {
+        return $this->audioguides;
+    }
+
+    public function addAudioguide(Audioguide $audioguide): static
+    {
+        if (!$this->audioguides->contains($audioguide)) {
+            $this->audioguides->add($audioguide);
+        }
+
+        return $this;
+    }
+
+    public function removeAudioguide(Audioguide $audioguide): static
+    {
+        $this->audioguides->removeElement($audioguide);
+
+        return $this;
     }
 }

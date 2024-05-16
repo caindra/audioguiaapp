@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AudioguideRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,6 +39,14 @@ class Audioguide
      * @var resource|null $image
      */
     private $image = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'audioguides')]
+    private Collection $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -123,6 +133,33 @@ class Audioguide
     public function setImage($image): void
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addAudioguide($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeAudioguide($this);
+        }
+
+        return $this;
     }
 
 
