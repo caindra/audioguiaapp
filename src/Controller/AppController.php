@@ -8,17 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AppController extends AbstractController
 {
-    #[Route('/', name: 'cover')]
-    public function cover() : Response
+    #[Route('/', name: 'index')]
+    public function index() : Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-        return $this->render('spanish/cover.html.twig');
+        //$this->denyAccessUnlessGranted('ROLE_USER');
+        return $this->render('main/index.html.twig');
     }
 
-    #[Route('/english', name: 'cover_english')]
-    public function coverEnglish() : Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-        return $this->render('english/cover.html.twig');
-    }
 }
