@@ -21,28 +21,18 @@ class AudioguideRepository extends ServiceEntityRepository
         parent::__construct($registry, Audioguide::class);
     }
 
-//    /**
-//     * @return Audioguide[] Returns an array of Audioguide objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function save(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 
-//    public function findOneBySomeField($value): ?Audioguide
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function remove(Audioguide $audioguide): void
+    {
+        $this->getEntityManager()->remove($audioguide);
+    }
+
+    public function add(Audioguide $audioguide): void
+    {
+        $this->getEntityManager()->persist($audioguide);
+    }
 }
