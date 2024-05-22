@@ -2,17 +2,17 @@
 {% set current_path = app.request.get('_route')|split('_') %}
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <h3><a class="navbar-brand" href="#"><i class="fa-solid fa-podcast"></i> {{ 'brand.name' | trans}}</a></h3>
+        <h3><a class="navbar-brand" href="#"><i class="fa-solid fa-podcast"></i> {{ 'brand.name' | trans({}, 'menu') }}</a></h3>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-house"></i> {{ 'menu.home' | trans }}</a>
+                    <a class="nav-link" href="#"><i class="fa-solid fa-house"></i> {{ 'menu.home' | trans({}, 'menu') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-play"></i> {{ 'menu.audio' | trans }}</a>
+                    <a class="nav-link" href="#"><i class="fa-solid fa-circle-play"></i> {{ 'menu.audio' | trans({}, 'menu') }}</a>
                 </li>
             </ul>
         </div>{#
@@ -22,6 +22,6 @@
         {% else %}
             <a href="{{ path('app_login_es') }}" class="btn btn-primary">{{ 'login' | trans }}</a>
         {% endif %} #}
-        <a href="{{ path('app_login_es') }}" class="btn btn-primary">{{ 'login' | trans }}</a>
+        <a href="#" class="btn btn-primary">{{ 'login' | trans({}, 'menu') }}</a>
     </div>
 </nav>
