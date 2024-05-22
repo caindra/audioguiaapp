@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Listado de audioguías</h1>
+        {% for audio in audios %}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="" alt="Card image cap">
+
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        {% else %}
+            <h5>No hay audios registrados</h5>
+        {% endfor %}
+{% endblock %}
