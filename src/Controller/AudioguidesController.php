@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\AudioguideRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,9 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class AudioguidesController extends AbstractController
 {
     #[Route('/audioguides', name: 'audioguides')]
-    public function list() : Response
+    public function list(
+        EntityManagerInterface $entityManager,
+        AudioguideRepository $audioguideRepository) : Response
     {
-
-        return $this->render('audioguides/list.html.twig');
+        $audioguides = $audioguideRepository->findAll();
+        return $this->render('audioguides/list.html.twig', [
+            'audios' => $audioguides
+        ]);
     }
+
 }
