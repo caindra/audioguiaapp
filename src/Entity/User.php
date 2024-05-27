@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method bool needsRehash(PasswordAuthenticatedUserInterface $user)
  */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, UserPasswordHasherInterface, PasswordAuthenticatedUserInterface
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -121,41 +121,7 @@ class User implements UserInterface, UserPasswordHasherInterface, PasswordAuthen
         return $this;
     }
 
-    public function getRoles()
-    {
-        $roles = [];
-        $roles[] = 'ROLE_USER';
-        if($this->getIsEditor()){
-            $roles[] = 'ROLE_EDITOR';
-        }
-        if($this->getIsAdmin()){
-            $roles[] = 'ROLE_EDITOR';
-            $roles[] = 'ROLE_ADMIN';
-        }
-        return array_unique($roles);
-    }
 
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    public function getUsername()
-    {
-        // TODO: Implement getUsername() method.
-    }
-
-    public function __call(string $name, array $arguments)
-    {
-        // TODO: Implement @method string getUserIdentifier()
-        // TODO: Implement @method string hashPassword(PasswordAuthenticatedUserInterface $user, string $plainPassword)
-        // TODO: Implement @method bool isPasswordValid(PasswordAuthenticatedUserInterface $user, string $plainPassword)
-        // TODO: Implement @method bool needsRehash(PasswordAuthenticatedUserInterface $user)
-    }
 
     /**
      * @return Collection<int, Audioguide>

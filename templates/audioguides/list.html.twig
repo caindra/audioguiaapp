@@ -1,18 +1,23 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <h1>Listado de audioguías</h1>
+    <h1>{{ 'title' | trans({}, 'audioguides') }}</h1>
+    <div class="row">
+        <a href="?lang=es" class="btn btn-primary">{{ 'langEs' | trans({}, 'audioguides') }</a>
+        <a href="?lang=en" class="btn btn-primary">{{ 'langEn' | trans({}, 'audioguides') }</a>
+    </div>
+    <div class="row">
         {% for audio in audios %}
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{ audio.image }}" alt="{{ audio.nameEs }}">
-                <audio src="{{ audio.audioEs }}" controls autoplay></audio>
+            <div class="card col" style="width: 18rem; margin: 1em; padding: .5em;">
+                <img class="card-img-top" src="{{ audio.image }}" alt="{{ attribute(audio, 'name' ~ language|capitalize) }}">
+                <audio src="{{ attribute(audio, 'audio' ~ language|capitalize) }}" controls autoplay></audio>
                 <div class="card-body">
-                    <h5 class="card-title">{{ audio.nameEs }}</h5>
-                    <p class="card-text">{{ audio.textEs }}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">{{ attribute(audio, 'name' ~ language|capitalize) }}</h5>
+                    <p class="card-text">{{ attribute(audio, 'text' ~ language|capitalize) }}</p>
                 </div>
             </div>
         {% else %}
-            <h5>No hay audios registrados</h5>
+            <h5>{{ 'no_audios' | trans({}, 'audioguides') }</h5>
         {% endfor %}
+    </div>
 {% endblock %}
