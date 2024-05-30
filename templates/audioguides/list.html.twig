@@ -2,14 +2,14 @@
 
 {% block content %}
     <h1>{{ 'title' | trans({}, 'audioguides') }}</h1>
-    <div class="row">
+    <div class="row mb-3">
         <a href="?lang=es" class="btn btn-primary">{{ 'langEs' | trans({}, 'audioguides') }}</a>
         <a href="?lang=en" class="btn btn-primary">{{ 'langEn' | trans({}, 'audioguides') }}</a>
     </div>
     <div class="row">
         {% for audio in audios %}
-            <div class="card col" style="width: 18rem; margin: 1em; padding: .5em;">
-                <img class="card-img-top" src="{{ audio.image }}" alt="{{ attribute(audio, 'name' ~ language|capitalize) }}">
+            <div class="card col-12 col-md-6 col-lg-4 mb-4" style="padding: .5em;">
+                <img class="card-img-top" src="{{ path('template_layout', {'id': template.id}) }}" alt="{{ attribute(audio, 'name' ~ language|capitalize) }}">
                 <audio src="{{ attribute(audio, 'audio' ~ language|capitalize) }}" controls autoplay></audio>
                 <div class="card-body">
                     <h5 class="card-title">{{ attribute(audio, 'name' ~ language|capitalize) }}</h5>
