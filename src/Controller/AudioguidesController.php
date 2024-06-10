@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Audioguide;
+use App\Form\AudioguideType;
 use App\Repository\AudioguideRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,6 +55,30 @@ class AudioguidesController extends AbstractController
         return $response;
     }
 
+    #[Route('/audio/{id}', name: 'audio_play_es')]
+    public function playAudioEs(Audioguide $audioguide): Response
+    {
+        $callback = function () use ($audioguide) {
+            echo stream_get_contents($audioguide->getAudioEs());
+        };
+
+        $response = new StreamedResponse($callback);
+        $response->headers->set('Content-Type', 'audio/mpeg');
+        return $response;
+    }
+
+    #[Route('/audio/{id}', name: 'audio_play_en')]
+    public function playAudioEn(Audioguide $audioguide): Response
+    {
+        $callback = function () use ($audioguide) {
+            echo stream_get_contents($audioguide->getAudioEn());
+        };
+
+        $response = new StreamedResponse($callback);
+        $response->headers->set('Content-Type', 'audio/mpeg');
+        return $response;
+    }
+
     #[Route('/audioguides/create', name: 'create_audioguide')]
     final public function createTemplate(
         AudioguideRepository $audioguideRepository,
@@ -62,16 +87,30 @@ class AudioguidesController extends AbstractController
     {
         $audioguide = new Audioguide();
         $audioguideRepository->add($audioguide);
-        $form = $this->createForm(NewAudioguideType::class, $audioguide);
+        $form = $this->createForm(AudioguideType::class, $audioguide);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $layoutFile = $form->get('layout')->getData();
+            $imageFile = $form->get('image')->getData();
+            $audioEs = $form->get('audioEs')->getData();
+            $audioEn = $form->get('audioEn')->getData();
 
-            if ($layoutFile) {
-                $layoutStream = fopen($layoutFile->getRealPath(), 'rb');
+            if ($imageFile) {
+                $layoutStream = fopen($imageFile->getRealPath(), 'rb');
                 $audioguide->setImage(stream_get_contents($layoutStream));
                 fclose($layoutStream);
+            }
+
+            if ($audioEs) {
+                $audioStreamEs = fopen($audioEs->getRealPath(), 'rb');
+                $audioguide->setAudioEs(stream_get_contents($audioStreamEs));
+                fclose($audioStreamEs);
+            }
+
+            if ($audioEn) {
+                $audioStreamEn = fopen($audioEn->getRealPath(), 'rb');
+                $audioguide->setAudioEn(stream_get_contents($audioStreamEn));
+                fclose($audioStreamEn);
             }
 
             try {
@@ -98,11 +137,26 @@ class AudioguidesController extends AbstractController
         $form = $this->createForm(AudioguideType::class, $audioguide);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $layoutFile = $form->get('layout')->getData();
-            if ($layoutFile) {
-                $layoutStream = fopen($layoutFile->getRealPath(), 'rb');
+            $imageFile = $form->get('image')->getData();
+            $audioEs = $form->get('audioEs')->getData();
+            $audioEn = $form->get('audioEn')->getData();
+
+            if ($imageFile) {
+                $layoutStream = fopen($imageFile->getRealPath(), 'rb');
                 $audioguide->setImage(stream_get_contents($layoutStream));
                 fclose($layoutStream);
+            }
+
+            if ($audioEs) {
+                $audioStreamEs = fopen($audioEs->getRealPath(), 'rb');
+                $audioguide->setAudioEs(stream_get_contents($audioStreamEs));
+                fclose($audioStreamEs);
+            }
+
+            if ($audioEn) {
+                $audioStreamEn = fopen($audioEn->getRealPath(), 'rb');
+                $audioguide->setAudioEn(stream_get_contents($audioStreamEn));
+                fclose($audioStreamEn);
             }
             try {
                 $audioguideRepository->save();
