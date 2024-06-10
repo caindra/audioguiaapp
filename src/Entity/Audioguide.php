@@ -28,11 +28,17 @@ class Audioguide
     #[ORM\Column(type: Types::TEXT)]
     private ?string $textEn = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $audioEs = null;
+    #[ORM\Column(type: 'blob')]
+    /**
+     * @var resource|null $audio
+     */
+    private $audioEs = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $audioEn = null;
+    #[ORM\Column(type: 'blob')]
+    /**
+     * @var resource|null $audio
+     */
+    private $audioEn = null;
 
     #[ORM\Column(type: 'blob')]
     /**
@@ -97,26 +103,36 @@ class Audioguide
         return $this;
     }
 
-    public function getAudioEs(): ?string
+    /**
+     * @return resource|null
+     */
+    public function getAudioEs()
     {
         return $this->audioEs;
     }
 
-    public function setAudioEs(?string $audioEs): Audioguide
+    /**
+     * @param resource|null $audioEs
+     */
+    public function setAudioEs($audioEs): void
     {
         $this->audioEs = $audioEs;
-        return $this;
     }
 
-    public function getAudioEn(): ?string
+    /**
+     * @return resource|null
+     */
+    public function getAudioEn()
     {
         return $this->audioEn;
     }
 
-    public function setAudioEn(?string $audioEn): Audioguide
+    /**
+     * @param resource|null $audioEn
+     */
+    public function setAudioEn($audioEn): void
     {
         $this->audioEn = $audioEn;
-        return $this;
     }
 
     /**
@@ -161,8 +177,5 @@ class Audioguide
 
         return $this;
     }
-
-
-
 
 }
