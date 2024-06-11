@@ -10,6 +10,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 /**
  * @method string getUserIdentifier()
  * @method string hashPassword(PasswordAuthenticatedUserInterface $user, string $plainPassword)
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method bool needsRehash(PasswordAuthenticatedUserInterface $user)
  */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, UserPasswordHasherInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -145,5 +146,40 @@ class User
         $this->audioguides->removeElement($audioguide);
 
         return $this;
+    }
+
+    public function getRoles()
+    {
+        $roles = [];
+        $roles[] = 'ROLE_USER';
+        if ($this->getIsAdmin()) {
+            $roles[] = 'ROLE_ADMIN';
+        }
+        if ($this->getIsEditor()) {
+            $roles[] = 'ROLE_EDITOR';
+        }
+        return array_unique($roles);
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    public function __call(string $name, array $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
+        // TODO: Implement @method string hashPassword(PasswordAuthenticatedUserInterface $user, string $plainPassword)
+        // TODO: Implement @method bool isPasswordValid(PasswordAuthenticatedUserInterface $user, string $plainPassword)
+        // TODO: Implement @method bool needsRehash(PasswordAuthenticatedUserInterface $user)
     }
 }
