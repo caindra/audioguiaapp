@@ -9,8 +9,14 @@
     <div class="row">
         {% for audio in audios %}
             <div class="card col-12 col-md-6 col-lg-4 mb-4" style="padding: .5em;">
-                <img class="card-img-top" src="{{ path('template_layout', {'id': template.id}) }}" alt="{{ attribute(audio, 'name' ~ language|capitalize) }}">
-                <audio src="{{ attribute(audio, 'audio' ~ language|capitalize) }}" controls autoplay></audio>
+                <img class="card-img-top" src="{{ path('audio_image', {'id': audio.id}) }}" alt="{{ attribute(audio, 'name' ~ language|capitalize) }}">
+                {% if app.request.get('lang') == 'es' %}
+                    <audio src="{{ path('audio_play_es', {'id': audio.id}) }}" controls></audio>
+                {% elseif app.request.get('lang') == 'en' %}
+                    <audio src="{{ path('audio_play_en', {'id': audio.id}) }}" controls></audio>
+                {% else %}
+                    <audio src="{{ path('audio_play_es', {'id': audio.id}) }}" controls></audio> <!-- Default to Spanish if no language is specified -->
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ attribute(audio, 'name' ~ language|capitalize) }}</h5>
                     <p class="card-text">{{ attribute(audio, 'text' ~ language|capitalize) }}</p>

@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Listado de usuarios{% endblock %}
+
+{% block content %}
+    <h1>Listado de libros</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Nombre completo</th>
+            <th scope="col">Email</th>
+            <th scope="col">Rol</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in pagination.items %}
+            <tr>
+
+                <td>{{ user.fullName }}</td>
+                <td>{{ libro.email }}</td>
+                {% if user.isAdmin %}
+                    <td>Administrador</td>
+                {% elseif user.isEditor %}
+                    <td>Editor</td>
+                {% endif %}
+        {% else %}
+            <tr>
+                <th colspan="5">No hay usuarios registrados</th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('user_create') }}" class="btn btn-success">Añadir usuario</a>
+    {% endif %}
+{% endblock %}

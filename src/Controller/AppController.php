@@ -11,8 +11,13 @@ class AppController extends AbstractController
     #[Route('/', name: 'index')]
     public function index() : Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('main/index.html.twig');
     }
 
+    #[Route('/settings', name: 'settings')]
+    public function settings() : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        return $this->render('main/settings.html.twig');
+    }
 }
