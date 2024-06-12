@@ -10,19 +10,23 @@
             <th scope="col">Nombre completo</th>
             <th scope="col">Email</th>
             <th scope="col">Rol</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         {% for user in pagination.items %}
             <tr>
-
                 <td>{{ user.fullName }}</td>
-                <td>{{ libro.email }}</td>
+                <td>{{ user.email }}</td>
                 {% if user.isAdmin %}
                     <td>Administrador</td>
                 {% elseif user.isEditor %}
                     <td>Editor</td>
                 {% endif %}
+                <td><a href="#" class="btn"><i class="fa-solid fa-key"></i> Cambiar contraseña</a></td>
+                <td><a href="{{ path('user_edit') }}"><i class="fa-solid fa-user-pen"></i> Modificar</a></td>
+                <td><a href="{{ path('user_delete') }}"><i class="fa-solid fa-user-minus"></i> Eliminar</a></td>
+            </tr>
         {% else %}
             <tr>
                 <th colspan="5">No hay usuarios registrados</th>

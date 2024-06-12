@@ -172,7 +172,7 @@ class User implements UserInterface, UserPasswordHasherInterface, PasswordAuthen
 
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->email;
     }
 
     public function __call(string $name, array $arguments)

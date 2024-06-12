@@ -15,13 +15,12 @@
                     <a class="nav-link" href="{{ path('audioguides') }}"><i class="fa-solid fa-circle-play"></i> {{ 'menu.audio' | trans({}, 'menu') }}</a>
                 </li>
             </ul>
-        </div>{#
+        </div>
         {% if app.user %}
             <h5>Conectado como {{ app.user.email }}</h5>
-            <a href="{{ path('app_logout_es') }}" class="btn btn-danger">{{ 'logout' | trans }}</a>
+            <a href="{{ path('app_logout') }}" class="btn btn-danger">{{ 'logout' | trans }}</a>
         {% else %}
-            <a href="{{ path('app_login_es') }}" class="btn btn-primary">{{ 'login' | trans }}</a>
-        {% endif %} #}
-        <a href="#" class="btn btn-primary">{{ 'login' | trans({}, 'menu') }}</a>
+            <a href="{{ path('settings') }}" class="btn btn-primary">{{ 'login' | trans }}</a>
+        {% endif %}
     </div>
 </nav>
