@@ -23,9 +23,9 @@
                 {% elseif user.isEditor %}
                     <td>Editor</td>
                 {% endif %}
-                <td><a href="#" class="btn"><i class="fa-solid fa-key"></i> Cambiar contraseña</a></td>
-                <td><a href="{{ path('user_edit') }}"><i class="fa-solid fa-user-pen"></i> Modificar</a></td>
-                <td><a href="{{ path('user_delete') }}"><i class="fa-solid fa-user-minus"></i> Eliminar</a></td>
+                <td><a href="#" class="btn btn-dark"><i class="fa-solid fa-key"></i> Cambiar contraseña</a></td>
+                <td><a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-info"><i class="fa-solid fa-user-pen"></i> Modificar</a></td>
+                <td><a href="{{ path('user_delete', {'id': user.id}) }}" class="btn btn-danger"><i class="fa-solid fa-user-minus"></i> Eliminar</a></td>
             </tr>
         {% else %}
             <tr>

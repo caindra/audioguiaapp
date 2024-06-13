@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Modificar usuario</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <a href="{{ path('users') }}" class="btn btn-primary">Volver al listado</a>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}

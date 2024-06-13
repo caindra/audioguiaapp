@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Eliminar usuario</h1>
+    <div class="alert alert-danger">
+        El usuario "{{ user.fullName }}" será eliminado de la aplicación.
+        La operación no se puede deshacer
+    </div>
+    <form method="post">
+        <a href="{{ path('users') }}" class="btn btn-secondary">Volver al listado</a>
+        <button type="submit" name="confirmar" class="btn btn-danger">Confirmar</button>
+    </form>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
