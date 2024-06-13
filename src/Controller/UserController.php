@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\NewUserType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -38,7 +39,7 @@ class UserController extends AbstractController
     {
         $user = new User();
         $userRepository->add($user);
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(NewUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
