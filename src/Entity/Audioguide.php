@@ -178,4 +178,10 @@ class Audioguide
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return 'Audioguía: ' . $this->nameEs . ' / Audioguide: ' . $this->nameEn;
+    }
+
+
 }
