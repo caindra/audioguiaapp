@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  php-apache:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - ./audioguiaapp:/var/www/html
+    ports:
+      - "8081:80"
+      - "8443:443"
+    networks:
+      - symfony
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: passs
+      MYSQL_DATABASE: ecotour
+      MYSQL_USER: root
+      MYSQL_PASSWORD: passs
+    ports:
+      - "33060:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - symfony
+
+networks:
+  symfony:
+    driver: bridge
+
+volumes:
+  db_data:
