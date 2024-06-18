@@ -3,7 +3,13 @@
 {% block title %}Listado de usuarios{% endblock %}
 
 {% block content %}
-    <h1>Listado de libros</h1>
+    <h1>Listado de usuarios</h1>
+    {% for message in app.flashes('success') %}
+        <div class="notification is-success">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="notification is-danger">{{ message }}</div>
+    {% endfor %}
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -35,6 +41,6 @@
         </tbody>
     </table>
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('user_create') }}" class="btn btn-success">Añadir usuario</a>
+        <a href="{{ path('user_new') }}" class="btn btn-success">Añadir usuario</a>
     {% endif %}
 {% endblock %}

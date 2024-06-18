@@ -1,5 +1,6 @@
 brand.name: 'EcoTour'
 menu.home: 'Inicio'
 menu.audio: 'Audioguías'
+menu.settings: 'Configuración'
 login: 'Iniciar sesión'
 logout: 'Cerrar sesión'

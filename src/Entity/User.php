@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -39,7 +37,6 @@ class User implements UserInterface, UserPasswordHasherInterface, PasswordAuthen
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
     private ?string $password = null;
 
     #[ORM\Column(nullable: true)]
@@ -189,22 +186,5 @@ class User implements UserInterface, UserPasswordHasherInterface, PasswordAuthen
         // TODO: Implement @method string hashPassword(PasswordAuthenticatedUserInterface $user, string $plainPassword)
         // TODO: Implement @method bool isPasswordValid(PasswordAuthenticatedUserInterface $user, string $plainPassword)
         // TODO: Implement @method bool needsRehash(PasswordAuthenticatedUserInterface $user)
-    }
-
-    public static function loadValidatorMetadata(ClassMetadata $metadata): void
-    {
-        $metadata->addPropertyConstraint('isAdmin', new Assert\Callback('validateAdminEditor'));
-        $metadata->addPropertyConstraint('isEditor', new Assert\Callback('validateAdminEditor'));
-    }
-
-    public function validateAdminEditor(
-        $value,
-        ExecutionContextInterface $context,
-        $payload)
-    {
-        if (($this->getIsAdmin() && !$this->getIsEditor()) || (!$this->getIsAdmin() && $this->getIsEditor())) {
-            $context->buildViolation('Un usuario debe ser tanto Administrador como Editor, o ninguno.')
-                ->addViolation();
-        }
     }
 }

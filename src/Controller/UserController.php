@@ -31,25 +31,20 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/create', name: 'user_create')]
-    final public function createUser(
-        UserRepository $userRepository,
-        Request $request,
-    ): Response
+    #[Route('/user/new', name: 'user_new')]
+    public function create(UserRepository $userRepository, Request $request): Response
     {
         $user = new User();
-        $userRepository->add($user);
         $form = $this->createForm(NewUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $userRepository->add($user);
-                $userRepository->save();
-                $this->addFlash('success', 'Se ha creado con éxito');
+                $this->addFlash('success', 'El usuario ha sido creado con éxito.');
                 return $this->redirectToRoute('users');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'No se ha podido crear. Error: ' . $e->getMessage());
+                $this->addFlash('error', 'El usuario no pudo ser creado. Error: ' . $e->getMessage());
             }
         }
 
@@ -58,43 +53,43 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/modify/{id}', name: 'user_edit')]
-    public function modifyUser(
-        Request $request,
+    #[Route('/user/edit/{id}', name: 'user_edit')]
+    public function edit(
         User $user,
         UserRepository $userRepository,
-    ): Response {
+        Request $request): Response
+    {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $userRepository->save();
-                $this->addFlash('success', 'La modificación se ha realizado correctamente');
+                $this->addFlash('success', 'The user has been edited successfully.');
                 return $this->redirectToRoute('users');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'No se han podido aplicar las modificaciones. Error: ' . $e->getMessage());
+                $this->addFlash('error', 'The modifications could not be applied. Error: ' . $e->getMessage());
             }
         }
+
         return $this->render('users/modify.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
-    #[Route('/users/delete/{id}', name: 'user_delete')]
-    final public function deleteUser(
+    #[Route('/user/delete/{id}', name: 'user_delete')]
+    public function delete(
         User $user,
         UserRepository $userRepository,
-        Request $request
-    ): Response
+        Request $request): Response
     {
-        if ($request->request->has('confirmar')) {
+        if ($request->request->has('confirm')) {
             try {
                 $userRepository->remove($user);
-                $userRepository->save();
-                $this->addFlash('success', 'El usuario ha sido eliminada con éxito');
+                $this->addFlash('success', 'The user has been deleted successfully.');
                 return $this->redirectToRoute('users');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'No se ha podido eliminar al usuario. Error: ' . $e->getMessage());
+                $this->addFlash('error', 'The user could not be deleted. Error: ' . $e->getMessage());
             }
         }
 

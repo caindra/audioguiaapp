@@ -2,6 +2,12 @@
 
 {% block content %}
     <h1>Añadir Usuario</h1>
+    {% for message in app.flashes('success') %}
+        <div class="notification is-success">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="notification is-danger">{{ message }}</div>
+    {% endfor %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <a href="{{ path('users') }}" class="btn btn-primary">Volver al listado</a>

@@ -17,7 +17,7 @@ class AppController extends AbstractController
     #[Route('/settings', name: 'settings')]
     public function settings() : Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
         return $this->render('main/settings.html.twig');
     }
 }
